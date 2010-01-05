@@ -20,7 +20,7 @@ our @EXPORT_OK = ( @{ $EXPORT_TAGS{'all'} } );
 our @EXPORT = qw(
   
 );
-our $VERSION = '0.11';
+our $VERSION = '0.12';
 
 use Math::BigInt;
 use Sys::Hostname;
@@ -49,19 +49,19 @@ sub base62() { ################################################### Base62 #####
 }
 
 sub suniqid { ########################################### get unique id #####
-  my($s,$us)=gettimeofday();
-  my($v)=sprintf("%06d%5d%06d",$us,substr($s,-5),$$);
+  my($s,$us)=gettimeofday();usleep(1);
+  my($v)=sprintf("%06d%05d%06d",$us,substr($s,-5),$$);
   return(&base62($v));
 }
 
 sub uniqid { ########################################### get unique id #####
-  my($s,$us)=gettimeofday();
+  my($s,$us)=gettimeofday();usleep(1);
   my($v)=sprintf("%06d%010d%06d",$us,$s,$$);
   return(&base62($v));
 }
 
 sub luniqid { ############################################ get unique id #####
-  my($s,$us)=gettimeofday();
+  my($s,$us)=gettimeofday();usleep(1);
   my($ia,$ib,$ic,$id)=unpack("C4", (gethostbyname(hostname()))[4]);
   my($v)=sprintf("%06d%10d%06d%03d%03d%03d%03d",$us,$s,$$,$ia,$ib,$ic,$id);
 	return(&base62($v));
